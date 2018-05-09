@@ -26,6 +26,7 @@ public class ArticleServlet  extends HttpServlet{
 		
 		@Override
 		    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
 			if(request.getParameter("image")!=null){
 				try {
 					Insert.insertArticol(DataParser.returnSysdate(), request.getParameter("title"), request.getParameter("content"), request.getParameter("image"), 3, request.getParameter("link"));

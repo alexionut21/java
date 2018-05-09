@@ -8,7 +8,8 @@ String intensitate;
 String densitate;
 String frecventa;
 String volum;
-Blob continut;
+String continut;
+String numeAntrenament;
 public int getId_antrenament() {
 	return id_antrenament;
 }
@@ -39,11 +40,17 @@ public String getVolum() {
 public void setVolum(String volum) {
 	this.volum = volum;
 }
-public Blob getContinut() {
+public String getContinut() {
 	return continut;
 }
-public void setContinut(Blob continut) {
+public void setContinut(String continut) {
 	this.continut = continut;
+}
+public String getNumeAntrenament() {
+	return numeAntrenament;
+}
+public void setNumeAntrenament(String numeAntrenament) {
+	this.numeAntrenament = numeAntrenament;
 }
 
 }

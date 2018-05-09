@@ -9,6 +9,7 @@ String terapie_boala;
 String interventii_chirurgicale;
 String nasteri;
 String nr_nasteri;
+String apt_sport;
 Date perioada;
 public int getId_istoric_medical() {
 	return id_istoric_medical;
@@ -51,6 +52,12 @@ public Date getPerioada() {
 }
 public void setPerioada(Date perioada) {
 	this.perioada = perioada;
+}
+public String getApt_sport() {
+	return apt_sport;
+}
+public void setApt_sport(String apt_sport) {
+	this.apt_sport = apt_sport;
 }
 
 }

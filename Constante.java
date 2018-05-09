@@ -3,9 +3,9 @@ package licenta;
 public class Constante {
 	
 	public static final int intBarbat = 10000000;
-	public static final String barbat="barbat";
+	public static final String barbat="B";
 	public static final int intFemeie = 20000000;
-	public static final String femeie="femeie";
+	public static final String femeie="F";
 	
 	
 	public static final int intSedentar = 1;

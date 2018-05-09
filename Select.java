@@ -10,15 +10,20 @@ import java.util.ArrayList;
 
 import Decoder.BASE64Encoder;
 import views.Anamneza;
+import views.Antrenament;
 import views.Articol;
 import views.Comentariu;
+import views.IstoricMedical;
 import views.Provocare;
 import views.Utilizator;
 
 public class Select {
 public static void main(String[] args) throws FileNotFoundException{
 		//System.out.println(selectUtilizatorForProfile("admin","admin").getEmail());
-	System.out.println(selectAnamnezaForProfile(78));
+	//System.out.println(selectAntrenamentForProfile("MenBegginerLW").getContinut());
+	//System.out.println(selectLastIdAnamneza());
+	//System.out.println(selectIstoricMedicalForProfile(38).getApt_sport());
+	System.out.println(selectAntrenamentForProfile("MenBegginerLW").getNumeAntrenament());
 }
 		
     public static ArrayList<Articol> selectArticol() throws SQLException {
@@ -231,6 +236,26 @@ public static void main(String[] args) throws FileNotFoundException{
 		 return id;
 	 }
 	 
+	 public static int selectLastIdAnamneza(){
+		 Connection con = null;
+		 PreparedStatement stm = null;
+			ResultSet resultSet = null;
+			int id=0;
+			try {
+				con = DBConnection.getConnection();
+				String query = "SELECT MAX(ID_ANAMNEZA) FROM ANAMNEZA";
+				stm = con.prepareStatement(query);
+				resultSet = stm.executeQuery();
+				while(resultSet.next()){
+					id=resultSet.getInt("MAX(ID_ANAMNEZA)");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 return id;
+	 }
+	 
 	 public static Utilizator selectUtilizatorForProfile(String email,String parola){
 		 Connection con = null;
 		 	PreparedStatement stm = null;
@@ -298,5 +323,53 @@ public static void main(String[] args) throws FileNotFoundException{
 				e.printStackTrace();
 			}
 		 return anam;
+	 }
+	 
+	 public static IstoricMedical selectIstoricMedicalForProfile(int idAnamneza){
+		 Connection con = null;
+		 	PreparedStatement stm = null;
+			ResultSet resultSet = null;
+			IstoricMedical istMed = new IstoricMedical();
+			try {
+			con = DBConnection.getConnection();
+			String query = "SELECT * FROM ISTORIC_MEDICAL WHERE ID_ANAMNEZA=?";
+			stm = con.prepareStatement(query);
+			stm.setInt(1, idAnamneza);
+			resultSet = stm.executeQuery();
+			while(resultSet.next()){
+				istMed.setBoli_cardiace(resultSet.getString("BOLI_CARDIACE"));
+				istMed.setTerapie_boala(resultSet.getString("TERAPIE_BOALA"));
+				istMed.setInterventii_chirurgicale(resultSet.getString("INTERVENTII_CHIRURGICALE"));
+				istMed.setApt_sport(resultSet.getString("APT_SPORT"));
+			}				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 return istMed;
+	 }
+	 
+	 
+	 public static Antrenament selectAntrenamentForProfile(String numeAntrenament){
+		 Connection con = null;
+		 	PreparedStatement stm = null;
+			ResultSet resultSet = null;
+			Antrenament antre = new Antrenament();
+			try {
+			con = DBConnection.getConnection();
+			String query = "select * from antrenament where nume_antr=?";
+			stm = con.prepareStatement(query);
+			stm.setString(1, numeAntrenament);
+			resultSet = stm.executeQuery();
+			while(resultSet.next()){
+				antre.setContinut(Select.blobToString(resultSet.getBlob("CONTINUT")));
+				antre.setNumeAntrenament(resultSet.getString("NUME_ANTR"));
+				System.out.println("NUME_ANTR ESTE" +antre.getNumeAntrenament());
+			}				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 return antre;
 	 }
 }

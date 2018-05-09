@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import licenta.Select;
 
@@ -24,13 +26,16 @@ public class LoginServlet extends HttpServlet{
 	    }
 		@Override
 	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nume=request.getParameter("email");
+		String email=request.getParameter("email");
 		String pass=request.getParameter("password");
-		System.out.println(nume);
+		System.out.println(email);
 		System.out.println(pass);
-			if(nume!=null && pass!=null && Select.selectLogin(nume, pass)==true){					
-			Select.selectLogin(nume, pass);
-			request.setAttribute("log","Email");
+			if(email!=null && pass!=null && Select.selectLogin(email, pass)==true){					
+			Select.selectLogin(email, pass);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("log", email);
+			session.setAttribute("pass", pass);
 			System.out.println(request.getAttribute("log"));
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			}else{
@@ -39,7 +44,7 @@ public class LoginServlet extends HttpServlet{
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}			
 	    }
-
+	
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -18,6 +18,7 @@ public class Insert {
 		insertUser("asd","red","dex","qqq",x,1,1);
 		//insertIstoricMedical();
 		insertAnamneza("M",85,"S","1-4","ENDO","SLABIRE",187,24,Select.selectLastIdUtilizator(),Select.selectLastIdIstoricMedical());
+		insertIstMedical("yes","no","yes","no");
 	}
 	public static void insertArticol(String date1,String title,String cont,String imageString,Integer id_utilizator,String link) throws SQLException, IOException {
 		 Connection con = null;
@@ -158,6 +159,31 @@ public class Insert {
 			 stm.setInt(8, imc);
 			 stm.setInt(9, idUtilizator);
 			 stm.setInt(10, idIstoricMedical);
+			 stm.execute();
+			 System.out.println("Succes");
+		 } catch (SQLException e) {
+			 // TODO Auto-generated catch block
+			 e.printStackTrace();
+		 }finally{		 
+			 closeConnection.closeCon(con, stm);
+		 }
+	 }
+	 
+	 public static void insertIstMedical(String bCardiace,String tBoala,String iChirurgicale,String aptSport){
+
+		 Connection con = null;
+		 PreparedStatement stm = null;
+		 try {
+			 con = DBConnection.getConnection();
+			 System.out.println("Inainte de insert");
+			 String query = "insert into ISTORIC_MEDICAL (boli_cardiace,terapie_boala,interventii_chirurgicale,id_anamneza,apt_sport) values(?,?,?,?,?)";
+			 System.out.println("Dupa insert");
+			stm = con.prepareStatement(query);
+			 stm.setString(1, bCardiace);
+			 stm.setString(2, tBoala);
+			 stm.setString(3, iChirurgicale);
+			 stm.setInt(4, Select.selectLastIdAnamneza());
+			 stm.setString(5, aptSport);
 			 stm.execute();
 			 System.out.println("Succes");
 		 } catch (SQLException e) {
